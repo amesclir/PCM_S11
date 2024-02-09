@@ -11,23 +11,23 @@ editor_options:
 RECONSTRUCCIÓN DE ÁREAS ANCESTRALES
 
 La reconstrucción de áreas ancestrales en la filogenia se ha vuelto central en la biogeografía evolutiva. 
-Hemos aprendido como reconstruir rasgos discreto y continuos en la filogenia.
-La reconstrucción de áreas biogeográficas requiere el uso de modelo diferentes a los que hemos usado hasta ahora. En los modelos que hemos usado ahora, había un estado de caracter ancestral, por ejemplo 0, y se adquiere un estado de caracter nuevo, por ejemplo 1. Pero en biogeografía una especie puede estar en el área ancestral A y migrar a una nueva área B, y su distribución comprenderá A y B, es decir, conserva el área ancestral también. Esta diferencia clave hace que tengamos que usar modelos diferentes para las reconstrucciones de áreas ancestrales.
+Hemos aprendido como reconstruir rasgos discretos y continuos en la filogenia.
+La reconstrucción de áreas biogeográficas requiere el uso de modelos diferentes a los que hemos usado hasta ahora. En los modelos que hemos usado ahora, había un estado de caracter ancestral, por ejemplo 0, y se adquiere un estado de caracter nuevo, por ejemplo 1. Pero en biogeografía una especie puede estar en el área ancestral A y migrar a una nueva área B, y su distribución comprenderá A y B, es decir, conserva el área ancestral también. Esta diferencia clave hace que tengamos que usar modelos diferentes para las reconstrucciones de áreas ancestrales.
 Además, hasta ahora hemos asumido que las transiciones de 0 a 1 y vicerversa ocurren en las ramas de la filogenia, si embargo, sabemos que uno de los motores más importantes de la especiación es el aislamiento geográfico (especiación alopátrida) por lo que quizás es más correcto reconstruir estos eventos de aislamiento geográfico en los nodos (cladogenesis) y no en las ramas.
 
 Hace unos años se describió el modelo DEC Dispersal Extinction Cladogenesis (Ree et al., 2005; Ree and Smith, 2008).
 Este modelo incluye tres eventos claves en la macroevolución y la biogeografía: la dispersión de una área a otra en las ramas de la filogenia, la extinción local de un área en las ramas de la filogenia y la cladogenesis, es decir, pasar de un linaje a dos linajes (en los nodos).
-Posteriormente se han desarrollado también modelo con un parámetro extra, jump o J, que modelizar la dispersión justo en el momento de cladogenesis (nodos) (Matzke 2012, 2014).
+Posteriormente se han desarrollado también modelos con un parámetro extra, jump o J, que modelizar la dispersión justo en el momento de cladogenesis (nodos) (Matzke 2012, 2014).
 Para poder correr este modelo necesitamos una filogenia, preferentemente ultramétrica y donde las longitudes de ramas están en unidades de tiempo o son proporcionales a tiempo.
-También necesitamos información sobre la distribución de todas la especies incluidas en la filogenia.
-En el modelo DEC se usan áreas discreta en el input del análisis. Básicamente el área total de distribución de las especies de la filogenia se divide en áreas más pequeñas (basándonos en algún criterio geográfico o biogeográfico) y se codifica la presencia y ausencia de todas las especies en la filogenia en esas áreas. 
+También necesitamos información sobre la distribución de todas las especies incluidas en la filogenia.
+En el modelo DEC se usan áreas discretas en el input del análisis. Básicamente el área total de distribución de las especies de la filogenia se divide en áreas más pequeñas (basándonos en algún criterio geográfico o biogeográfico) y se codifica la presencia y ausencia de todas las especies en la filogenia en esas áreas. 
 Con la excepción de algunos casos en las que las áreas vienen definidas por islas, normalmente en este proceso muchas veces hay poca ciencia detrás. Es decir, es muy subjetivo muchas veces en cuantas áreas se divide la distribución total de tu conjunto de especies.
 Debemos de tener cuidado de no dividir el área total en muchas áreas, especialmente en filogenias relativamente pequeñas. Sería poco práctico tener más áreas que especies.
-Como guía diremos que si cada una de las espcies en la filogenia están solo en un área, entonces posiblesmente nuestras áreas son muy grandes y son demasiado pocas. Sin embargo, si todas las especies de nuestra filogenia están en más de un área, posiblemente tenemos demasiadas áreas y son muy pequeñas.
+Como guía diremos que si ninguna o casi ninguna de las especies en la filogenia están solo en un área, entonces posiblemente nuestras áreas son muy grandes y son demasiado pocas. Sin embargo, si todas o casi todas las especies de nuestra filogenia están en más de un área, posiblemente tenemos demasiadas áreas y son muy pequeñas.
 
-Para visualizar el modelo vamos usar los data set del grupo de hormigas cultivadoras de hongos de la Tribu Attini de Branstetter et al. 2017
+Para visualizar el modelo biogoegráfico DEC vamos usar los data set del grupo de hormigas cultivadoras de hongos de la Tribu Attini de Branstetter et al. 2017
 
-Carguemos el paquete BioGeoBEARS (Matzke, 2013) y echemos un vistazo a los set de datos. Te en cuenta que la instalación del paquete BioGeoBEARS no se hace desde CRAN si no directmente desde el repositoio GitHub y se hace con el paquete de R devtools.
+Carguemos el paquete BioGeoBEARS (Matzke, 2013) y echemos un vistazo a los set de datos. Te en cuenta que la instalación del paquete BioGeoBEARS no se hace desde CRAN si no directamente desde el repositorio GitHub y se hace con el paquete de R devtools.
 Fíjate que BioGeoBEARS carga los archivos de entrada de manera un tanto peculiar en comparación a otros paquetes que hemos visto.
 
 ```{r}
@@ -43,7 +43,7 @@ print(ant.tree,printlen=2)
 writeLines(readLines("attine-distribution-data.txt",10))
 ```
 
-El formato de las areas es un formato PHYLIP con algunas modificaciones. Se indica el número de species en la filogenia y por lo tanto en la matriz de areas y luego el número de áreas (nombre entre parántesis). Y luego tenemos una columna con los nombres de las espeices tan y como aparecen en la filogenia y tantas columnas de 1 y 0 como áreas se hayan indicado, dodificando la presencia y ausencia de cada una de las especies.
+El formato de las areas es un formato PHYLIP con algunas modificaciones. Se indica el número de species en la filogenia y luego el número de áreas (nombres entre parántesis). Y luego tenemos una columna con los nombres de las especies tal y como aparecen en la filogenia y tantas columnas de 1 y 0 como áreas se hayan indicado, dodificando la presencia y ausencia de cada una de las especies.
 
 Visualicemos la filogenia y las áreas usando algunos funciones de BioGeoBEARS y phytools. Las regiones se han denominado en la matriz de A a la E pero son concretamente Neartico, América Central, Sudamérica, África Tropical y Australasia. Las cinco grandes regiones donde podemos encontrar estas hormigas.
 
@@ -66,16 +66,17 @@ legend("topleft",c("species absent","species present"),pch=22,pt.bg=c("white","d
 
 De nuevo, reiteramos que la manera en que BioGeoBEARS lee los archivos de entrada es un poco diferentes a los típicos paquetes de R.
 
-En primer luegar tenemos que fijar el número máximo de áreas en la distribución de las especies. En nuestro caso en principio puede ser un valor entre 1 y 5, pero si tiene especies con 2 áreas codificadas, como es nuestro caso, el mínimo es 2 y el máximo. Como en nuestro caso, las áreas son grandes, subcontinentes, vamos a usar el valor mínimo, que es 2.
-En realidad, esta decisión va a ser nuevo claro en la reconstrucción de áreas inferida.
+En primer luegar tenemos que fijar el número máximo de áreas en la distribución de las especies. En nuestro caso en principio puede ser un valor entre 1 y 5, pero si tiene especies con 2 áreas codificadas, como es nuestro caso, el mínimo es 2 y el máximo 5. Como en nuestro caso, las áreas son grandes, subcontinentes, vamos a usar el valor mínimo posible, que es 2.
+En realidad, esta decisión va a ser de nuevo clave en la reconstrucción de áreas inferida.
 
 ```{r}
-max_range_size<-1
+max_range_size<-2
 ```
 
 A continuación vamos a crear un objeto donde le decimos a BioGeoBEARS todos los argumentos necesarios para ajustar nuestro modelo. Lo hacemos con la función define_BioGeoBEARS_run.
-Lo que hacemos es crear una lista con todos los argumentos necesarios para correr el análisis. Esta lista se crea con las condiciones por defecto. Y lo podemos modificar los diferentes parámetros y argumentos según nuestro antojo, es decir, según el los parámetros y condiciones que queremos ajustar en nuestro modelo biogeográfico.
-Alternativamente podemos crear esto objeto directamente con todos los parámetros y argumentos que queremos que tenga.
+Lo que hacemos es crear una lista con todos los argumentos necesarios para correr el análisis. Esta lista se crea con las condiciones por defecto (modelo DEC). Y lo podemos modificar los diferentes parámetros y argumentos según nuestro antojo, es decir, según los parámetros y condiciones que queremos ajustar en nuestro modelo biogeográfico (modelo DEC+J, DIVA, DIVA+J, etc., conexiones entre áreas, con o sin estratificar, parametros x y w, etc.).
+Alternativamente podemos crear este objeto directamente con todos los parámetros y argumentos que queremos que tenga con define_BioGeoBEARS_run. Si no modificamos nada, tendremos el modelo DEC.
+
 ```{r}
 # create run object
 bgb_run<-define_BioGeoBEARS_run(
@@ -107,9 +108,9 @@ La mejor manera de ver los resultados de la optimización del modelo es la sigui
 DEC.fit$optim_result
 ```
 
-El parámetro p1 es la rasa de dispersión y el parámetro p2 es la tasa de extinción.
+El parámetro p1 es la tasa de dispersión y el parámetro p2 es la tasa de extinción.
 
-Finalmente, podemos visualizar la reconstrucción de áreas ancestrales. BioGeoBEARS ha calculado la probabildades margionales de las áreas en los nodos de la filogenia. Podemos visualizar esto con la función plot_BioGeoBEARS_results que muestra las áreas con las mayores probabilidades marginales.
+Finalmente, podemos visualizar la reconstrucción de áreas ancestrales. BioGeoBEARS ha calculado las probabildades margionales de las áreas en los nodos de la filogenia. Podemos visualizar esto con la función plot_BioGeoBEARS_results que muestra las áreas con las mayores probabilidades marginales.
 
 ```{r}
 ## subdivide our plotting area using layout
@@ -120,7 +121,7 @@ par(mar=c(4.1,0.1,3.1,0.1),cex=0.8)
 plot_BioGeoBEARS_results(DEC.fit,analysis_titletxt="DEC model",plotlegend=TRUE,tipcex=0.4,statecex=0.4)
 ```
 
-Si te fijas en realidad co neste código hemos representado por un lado la filogenia y por otro lado la leyanda. Por eso previamente dividimos el espacio de ploteo en dos columnas, la primera más estrecha que la segunda.
+Si te fijas en realidad con este código hemos representado por un lado la filogenia y por otro lado la leyanda. Por eso previamente dividimos el espacio de ploteo en dos columnas, la primera más estrecha que la segunda.
 
 Una vez hemos ajustado el modelo DEC, vamos a hacer los mismo con el modelo DEC+J, que además de ajustar los parámetros de dispersión y extinción, ajusta un parámetro de jump, de dispersión en el momento de cladogenesis, es decir, en los nodos. Ten en cuenta que este parámetro ha sido criticado por algunos expertos en biogeografía (Ree & Sanmartin, 2018). Ver también la publicación de Klaus & Matzke (2020).
 Una vez ajustemos el modelo DEC+J podemos compararlo con el modelo DEC inicial.
@@ -180,7 +181,13 @@ AIC.table<-AICstats_2models(logL.DECJ,logL.DEC,numparams1=3,numparams2=2)
 print(AIC.table)
 ```
 
-La tabla es difiicil de leer, pero se puede apreciar que el ajuste del modelo DEC+J es mucho mejor que el del modelo DEC.
+La tabla es difícil de leer, pero se puede apreciar que el ajuste del modelo DEC+J es mucho mejor que el del modelo DEC.
+
+
+NUEVOS PARÁMETROS
+
+En los últimos años se ha incrementado el número de parámetros, modelos y opciones disponibles en BioGeoBEARS. Estas son algunas referencias claves (Van Dam & Matzke, 2016; Dupin et al., 2016)
+Los scripts para todas estás opciones disponibles, se pueden encontrar en http://phylo.wikidot.com/biogeobears aunque con un poco de desorden.
 
 ########################
 ACTIVIDADES
@@ -193,3 +200,30 @@ Usa valores de max_range_size <- 1 y max_range_size <- 3 y compara los resultado
 
 ```
 
+
+BIBLIOGRAFÍA BÁSICA
+
+Ree, R. H., and S. A. Smith. 2008. Maximum likelihood inference of geographic range evolution by
+dispersal, local extinction, and cladogenesis. Syst. Biol. 57:4–14.
+
+BIBLIOGRAFÍA RECOMENDADA
+
+Dupin, J., Matzke, N. J., Särkinen, T., Knapp, S., Olmstead, R. G., Bohs, L., & Smith, S. D. (2017). Bayesian estimation of the global biogeographical history of the Solanaceae. Journal of Biogeography, 44(4), 887-899.
+
+Klaus, K. V., and N. J. Matzke. 2020. Statistical comparison of trait-dependent biogeographical models
+indicates that podocarpaceae dispersal is influenced by both seed cone traits and geographical
+distance. Syst. Biol. 69:61–75.
+
+Matzke, N. J. 2012. Founder-event speciation in BioGeoBEARS package dramatically improves likeli-
+hoods and alters parameter inference in dispersal-extinction-cladogenesis (DEC) analyses. Front.
+Biogeogr 4:210.
+
+Matzke, N. J. 2013. Probabilistic historical biogeography: New models for founder-event speciation, imperfect detection, and fossils allow improved accuracy and model-testing. Front. Biogeogr. 5:242–48.
+
+Ree, R. H., B. R. Moore, C. O. Webb, and M. J. Donoghue. 2005. A likelihood framework for inferring the evolution of geographic range on phylogenetic trees. Evolution 59:2299–311.
+
+Ree, R. H., and I. Sanmartin. 2018. Conceptual and statistical problems with the DEC+J model of
+founder-event speciation and its comparison with DEC via model selection. J. Biogeogr. 45:
+741–49.
+
+Van Dam, M. H., & Matzke, N. J. (2016). Evaluating the influence of connectivity and distance on biogeographical patterns in the south‐western deserts of North America. Journal of Biogeography, 43(8), 1514-1532.
