@@ -13,7 +13,7 @@ RECONSTRUCCIÓN DE ÁREAS ANCESTRALES
 La reconstrucción de áreas ancestrales en la filogenia se ha vuelto central en la biogeografía evolutiva. 
 Hemos aprendido como reconstruir rasgos discretos y continuos en la filogenia.
 La reconstrucción de áreas biogeográficas requiere el uso de modelos diferentes a los que hemos usado hasta ahora. En los modelos que hemos usado ahora, había un estado de caracter ancestral, por ejemplo 0, y se adquiere un estado de caracter nuevo, por ejemplo 1. Pero en biogeografía una especie puede estar en el área ancestral A y migrar a una nueva área B, y su distribución comprenderá A y B, es decir, conserva el área ancestral también. Esta diferencia clave hace que tengamos que usar modelos diferentes para las reconstrucciones de áreas ancestrales.
-Además, hasta ahora hemos asumido que las transiciones de 0 a 1 y vicerversa ocurren en las ramas de la filogenia, si embargo, sabemos que uno de los motores más importantes de la especiación es el aislamiento geográfico (especiación alopátrida) por lo que quizás es más correcto reconstruir estos eventos de aislamiento geográfico en los nodos (cladogenesis) y no en las ramas.
+Además, hasta ahora hemos asumido que las transiciones de 0 a 1 y viceversa ocurren en las ramas de la filogenia, si embargo, sabemos que uno de los motores más importantes de la especiación es el aislamiento geográfico (especiación alopátrida) por lo que quizás es más correcto reconstruir estos eventos de aislamiento geográfico en los nodos (cladogenesis) y no en las ramas.
 
 Hace unos años se describió el modelo DEC Dispersal Extinction Cladogenesis (Ree et al., 2005; Ree and Smith, 2008).
 Este modelo incluye tres eventos claves en la macroevolución y la biogeografía: la dispersión de una área a otra en las ramas de la filogenia, la extinción local de un área en las ramas de la filogenia y la cladogenesis, es decir, pasar de un linaje a dos linajes (en los nodos).
@@ -43,7 +43,7 @@ print(ant.tree,printlen=2)
 writeLines(readLines("attine-distribution-data.txt",10))
 ```
 
-El formato de las areas es un formato PHYLIP con algunas modificaciones. Se indica el número de species en la filogenia y luego el número de áreas (nombres entre parántesis). Y luego tenemos una columna con los nombres de las especies tal y como aparecen en la filogenia y tantas columnas de 1 y 0 como áreas se hayan indicado, dodificando la presencia y ausencia de cada una de las especies.
+El formato de las areas es un formato PHYLIP con algunas modificaciones. Se indica el número de species en la filogenia y luego el número de áreas (nombres entre parántesis). Y luego tenemos una columna con los nombres de las especies tal y como aparecen en la filogenia y tantas columnas de 1 y 0 como áreas se hayan indicado, codificando la presencia y ausencia de cada una de las especies.
 
 Visualicemos la filogenia y las áreas usando algunos funciones de BioGeoBEARS y phytools. Las regiones se han denominado en la matriz de A a la E pero son concretamente Neartico, América Central, Sudamérica, África Tropical y Australasia. Las cinco grandes regiones donde podemos encontrar estas hormigas.
 
@@ -74,7 +74,7 @@ max_range_size<-2
 ```
 
 A continuación vamos a crear un objeto donde le decimos a BioGeoBEARS todos los argumentos necesarios para ajustar nuestro modelo. Lo hacemos con la función define_BioGeoBEARS_run.
-Lo que hacemos es crear una lista con todos los argumentos necesarios para correr el análisis. Esta lista se crea con las condiciones por defecto (modelo DEC). Y lo podemos modificar los diferentes parámetros y argumentos según nuestro antojo, es decir, según los parámetros y condiciones que queremos ajustar en nuestro modelo biogeográfico (modelo DEC+J, DIVA, DIVA+J, etc., conexiones entre áreas, con o sin estratificar, parametros x y w, etc.).
+Lo que hacemos es crear una lista con todos los argumentos necesarios para correr el análisis. Esta lista se crea con las condiciones por defecto (modelo DEC). Y lo podemos modificar los diferentes parámetros y argumentos según nuestro antojo, es decir, según los parámetros y condiciones que queremos ajustar en nuestro modelo biogeográfico (modelo DEC+J, DIVA, DIVA+J, etc., conexiones entre áreas, distancia entre áreas, con o sin estratificar, parámetros x (distancias) y w (conexiones), etc.).
 Alternativamente podemos crear este objeto directamente con todos los parámetros y argumentos que queremos que tenga con define_BioGeoBEARS_run. Si no modificamos nada, tendremos el modelo DEC.
 
 ```{r}
@@ -186,7 +186,7 @@ La tabla es difícil de leer, pero se puede apreciar que el ajuste del modelo DE
 
 NUEVOS PARÁMETROS
 
-En los últimos años se ha incrementado el número de parámetros, modelos y opciones disponibles en BioGeoBEARS. Estas son algunas referencias claves (Van Dam & Matzke, 2016; Dupin et al., 2016)
+En los últimos años se ha incrementado el número de parámetros, modelos y opciones disponibles en BioGeoBEARS (modelo DEC+J, DIVA, DIVA+J, etc., conexiones entre áreas, distancia entre áreas, con o sin estratificar, parámetros x (distancias) y w (conexiones), etc.). Estas son algunas referencias claves (Van Dam & Matzke, 2016; Dupin et al., 2016).
 Los scripts para todas estás opciones disponibles, se pueden encontrar en http://phylo.wikidot.com/biogeobears aunque con un poco de desorden.
 
 ########################
