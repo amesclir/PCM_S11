@@ -25,7 +25,7 @@ Con la excepción de algunos casos en las que las áreas vienen definidas por is
 Debemos de tener cuidado de no dividir el área total en muchas áreas, especialmente en filogenias relativamente pequeñas. Sería poco práctico tener más áreas que especies.
 Como guía diremos que si ninguna o casi ninguna de las especies en la filogenia están solo en un área, entonces posiblemente nuestras áreas son muy grandes y son demasiado pocas. Sin embargo, si todas o casi todas las especies de nuestra filogenia están en más de un área, posiblemente tenemos demasiadas áreas y son muy pequeñas.
 
-Para visualizar el modelo biogoegráfico DEC vamos usar los data set del grupo de hormigas cultivadoras de hongos de la Tribu Attini de Branstetter et al. 2017
+Para visualizar el modelo biogoegráfico DEC vamos usar los data set del grupo de hormigas cultivadoras de hongos de la Tribu Attini de Branstetter et al. 2017.
 
 Carguemos el paquete BioGeoBEARS (Matzke, 2013) y echemos un vistazo a los set de datos. Te en cuenta que la instalación del paquete BioGeoBEARS no se hace desde CRAN si no directamente desde el repositorio GitHub y se hace con el paquete de R devtools.
 Fíjate que BioGeoBEARS carga los archivos de entrada de manera un tanto peculiar en comparación a otros paquetes que hemos visto.
