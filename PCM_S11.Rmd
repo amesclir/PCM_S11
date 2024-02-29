@@ -155,7 +155,7 @@ DEC_J.fit<-bears_optim_run(bgb_run)
 DEC_J.fit$optim_result
 ```
 
-Ahora tenemos los valores de p1 y p2, dispersió y extinción, y también p3 el parámetro de jump.
+Ahora tenemos los valores de p1 y p2, dispersión y extinción, y también p3 el parámetro de jump.
 
 Vamos a visualizar la reconstrucción, tal y como lo hicimos para el modelo DEC.
 
